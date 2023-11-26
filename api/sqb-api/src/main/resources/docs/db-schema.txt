@@ -1,0 +1,5 @@
+Customers table contains columns cust_id, cust_name.
+Orders table contains columns order_num, order_date, cust_id.
+Vendors table contains columns vend_id, vend_name.
+Products table contains columns prod_id, vend_id, prod_name, prod_price.
+OrderItems table contains columns order_num, prod_id, quantity, item_price.
