@@ -20,7 +20,7 @@ export default function Search() {
   }
 
   const postSearchResults = () => {
-    const url = "http://localhost:8080/ai/dbquery";
+    const url = "http://ec2-54-242-176-52.compute-1.amazonaws.com/ai/dbquery";
     const body = { userMessage: searchTxt};
     let arr = searchQAArr;
     /*arr.push({id: arr.length, question: searchTxt, answer: "test"}); // remove when calling api
