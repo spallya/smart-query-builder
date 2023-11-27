@@ -15,18 +15,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-public class StuffController {
+public class DatabaseQueryController {
 
     private final AiClient aiClient;
 
-    @Value("classpath:/docs/db-schema.txt")
+    @Value("classpath:/schemas/db-schema.txt")
     private Resource dbSchemaDetails;
 
     @Value("classpath:/prompts/dba-prompt.st")
     private Resource dbaPromptResource;
 
     @Autowired
-    public StuffController(AiClient aiClient) {
+    public DatabaseQueryController(AiClient aiClient) {
         this.aiClient = aiClient;
     }
 
