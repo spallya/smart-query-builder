@@ -48,6 +48,71 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Generate Query",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"appId\": \"sample-app-1\",\n    \"userMessage\": \"explain the schema details that you have\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/ai/dbquery",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ai",
+						"dbquery"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Database Connectivity",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"host\": \"host_9aa988cf7bc7\",\n  \"port\": \"port_ca7d06cf1537\",\n  \"schemaName\": \"schemaName_128fc8859712\",\n  \"databaseProvider\": \"ORACLE\",\n  \"userName\": \"userName_d362c930ec25\",\n  \"password\": \"password_c803b91b0163\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/connectivity/db",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"connectivity",
+						"db"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
