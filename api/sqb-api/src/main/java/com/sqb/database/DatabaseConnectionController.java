@@ -16,8 +16,8 @@ public class DatabaseConnectionController {
     private DatabaseConfig databaseConfig;
 
     @PostMapping("/connectivity/db")
-    public ResponseEntity<Boolean> testConnectivity(@RequestBody DatabaseConnectionDto connectionDto) {
-        boolean testConnection = databaseConfig.testConnection(connectionDto);
+    public ResponseEntity<String> testConnectivity(@RequestBody DatabaseConnectionDto connectionDto) {
+        String testConnection = databaseConfig.testConnection(connectionDto);
         return new ResponseEntity<>(testConnection, HttpStatus.OK);
     }
 }

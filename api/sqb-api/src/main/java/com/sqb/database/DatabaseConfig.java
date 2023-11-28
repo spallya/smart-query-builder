@@ -11,15 +11,15 @@ import org.springframework.stereotype.Component;
 public class DatabaseConfig {
     private static final Logger LOG = LoggerFactory.getLogger(DatabaseConfig.class);
 
-    public boolean testConnection(DatabaseConnectionDto connectionDto) {
+    public String testConnection(DatabaseConnectionDto connectionDto) {
         try {
             Connection connection = getConnection(connectionDto);
             connection.close();
-            return true;
+            return "Connection Successful!!";
         } catch (ClassNotFoundException | SQLException e) {
             LOG.error(e.getMessage());
+            return "Connection Failed!! Error: " + e.getMessage();
         }
-        return false;
     }
 
     public Map<String, Set<String>> getSchemaMetadata(DatabaseConnectionDto connectionDto) {
