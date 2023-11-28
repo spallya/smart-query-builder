@@ -1,0 +1,53 @@
+{
+	"info": {
+		"_postman_id": "e095bc61-af59-4df6-ab66-ddab73f21813",
+		"name": "SQB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3374037"
+	},
+	"item": [
+		{
+			"name": "Upload a File",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/spallyaomar/Documents/ai workspaces/langchain4j-examples/devoxx/src/main/resources/story-about-happy-carrot.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/onboard/upload?appId=sample-app-2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"onboard",
+						"upload"
+					],
+					"query": [
+						{
+							"key": "appId",
+							"value": "sample-app-2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
