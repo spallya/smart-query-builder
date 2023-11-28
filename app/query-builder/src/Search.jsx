@@ -34,7 +34,7 @@ export default function Search() {
     /*arr.push({id: arr.length, question: searchTxt, answer: "test", appId: appId}); // remove when calling api
     arr.reverse(); // remove when calling api
     setSearchQAArr(arr); // remove when calling api */
-
+    
     console.log("in post search results: ", arr);
     axios.post(url, body)
     .then((response) => {
@@ -50,7 +50,7 @@ export default function Search() {
       arr.reverse();
       setSearchStack(arr);
     });
-
+    setSearchTxt("");
   }
 
   const handleSearch = () => {
@@ -80,7 +80,8 @@ export default function Search() {
       <h1>Smart Query Builder</h1>
 
       <div>
-      <select className="item" value={appId} onChange={handleAppIdChange} disabled={appIdDisplay}>
+      <select className="item" value={appId} onChange={handleAppIdChange} disabled={appIdDisplay}
+      style={{width: '200px', height: '100px'}}>
       <option value="none">Select an application</option>
       <option value="vantage">Vantage</option>
       <option value="WCA">WCA</option>
