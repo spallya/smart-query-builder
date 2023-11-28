@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +17,7 @@ public class CacheMetadataController {
 
     @Autowired
     private CacheManager cacheManager;
-    
+
     @GetMapping("/cached/metadata")
     public ResponseEntity<CachedMetaData> getCachedMetadata() {
         Map<String, String> onboardedApps = cacheManager.getOnboardedApps();

@@ -6,6 +6,7 @@ import org.springframework.ai.prompt.Prompt;
 import org.springframework.ai.prompt.PromptTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
@@ -35,11 +36,13 @@ public class DatabaseQueryController {
     @PostMapping("/ai/dbquery")
     public Completion completion(@RequestBody MessageRequest request) {
         PromptTemplate promptTemplate = new PromptTemplate(dbaPromptResource);
+        FileSystemResource imgFile = new FileSystemResource("/Users/spallyaomar/Documents/Wells Fargo POC/github/smart-query-builder/api/sqb-api/src/main/resources/schemas/" +
+                request.getAppId() + ".txt");
         Resource schema = resourceLoader.getResource("classpath:/schemas/" +
                 request.getAppId() + ".txt");
         Map<String, Object> map = new HashMap<>();
         map.put("question", request.getUserMessage());
-        map.put("context", schema);
+        map.put("context", imgFile);
         Prompt prompt = promptTemplate.create(map);
         AiResponse aiResponse = aiClient.generate(prompt);
         return new Completion(aiResponse.getGeneration().getText());
