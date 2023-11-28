@@ -48,10 +48,10 @@ public class FileUploadController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
-    @PostMapping("/onboard")
-    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
-
-        storageService.store(file);
+    @PostMapping("/onboard/upload")
+    public ResponseEntity<String> handleFileUpload(@RequestParam(value = "appId", required = true) String appId,
+            @RequestParam("file") MultipartFile file) {
+        storageService.store(file, appId);
 
         return new ResponseEntity<>("You have successfully uploaded " + file.getOriginalFilename() + "!", HttpStatus.OK);
     }

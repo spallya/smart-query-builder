@@ -29,13 +29,20 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public void store(MultipartFile file) {
+	public void store(MultipartFile file, String appId) {
 		try {
 			if (file.isEmpty()) {
 				throw new StorageException("Failed to store empty file.");
 			}
-			Path destinationFile = this.rootLocation.resolve(
-					Paths.get(file.getOriginalFilename()))
+			String originalFilename = file.getOriginalFilename();
+			if (originalFilename!= null && originalFilename.contains(".")) {
+				String[] split = originalFilename.split("\\.");
+				split[0] = appId;
+				originalFilename = split[0] + "." + split[1];
+			}
+            assert originalFilename != null;
+            Path destinationFile = this.rootLocation.resolve(
+					Paths.get(originalFilename))
 					.normalize().toAbsolutePath();
 			if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
 				// This is a security check
