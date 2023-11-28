@@ -21,9 +21,6 @@ public class DatabaseQueryController {
 
     private final AiClient aiClient;
 
-    @Value("classpath:/schemas/sample-app-1.txt")
-    private Resource dbSchemaDetails;
-
     @Value("classpath:/prompts/dba-prompt.st")
     private Resource dbaPromptResource;
 
