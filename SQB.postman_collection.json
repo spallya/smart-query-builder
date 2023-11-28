@@ -56,7 +56,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"appId\": \"sample-app-1\",\n    \"userMessage\": \"explain the schema details that you have\"\n}",
+					"raw": "{\n    \"appId\": \"ecommerce-app\",\n    \"userMessage\": \"list the table names you have\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -73,6 +73,66 @@
 					"path": [
 						"ai",
 						"dbquery"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Onboard new app",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"appId\": \"appId_fff2501a4f32\",\n  \"appName\": \"appName_837d354061da\",\n  \"dbConnectionDetails\": {\n    \"host\": \"host_37b6acb9ec8b\",\n    \"port\": \"port_cf0caf77079d\",\n    \"schemaName\": \"schemaName_33b4a0494c21\",\n    \"databaseProvider\": \"ORACLE\",\n    \"userName\": \"userName_18e27cfc3df2\",\n    \"password\": \"password_024cf9d709db\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/onboard",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"onboard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cached Metadata",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/cached/metadata",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cached",
+						"metadata"
 					]
 				}
 			},
