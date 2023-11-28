@@ -1,4 +1,4 @@
-package org.springframework.ai.openai.samples.helloworld.roles;
+package com.sqb.roles;
 
 import org.springframework.ai.client.AiClient;
 import org.springframework.ai.client.Generation;

@@ -1,4 +1,4 @@
-package org.springframework.ai.openai.samples.helloworld.stuff;
+package com.sqb.dbquery;
 
 import org.springframework.ai.client.AiClient;
 import org.springframework.ai.client.AiResponse;

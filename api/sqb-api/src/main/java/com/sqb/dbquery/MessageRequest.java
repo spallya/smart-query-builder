@@ -1,4 +1,4 @@
-package org.springframework.ai.openai.samples.helloworld.stuff;
+package com.sqb.dbquery;
 
 public class MessageRequest {
 
