@@ -20,7 +20,7 @@ export default function Search() {
   useEffect(() => {
     const metaDataUrl = "http://localhost:8080/cached/metadata";
     // remove below 2 lines when api integration is uncommented
-    setAppList([{id: "ems", value: "Employee Management System" }, {id: "vider", value: "Vider Solutions Pvt Ltd"}]);
+    setAppList([{ id: "ems", value: "Employee Management System" }, { id: "vider", value: "Vider Solutions Pvt Ltd" }]);
     setdbProviders(["ORACLE", "MY_SQL", "MS_SQL"])
     // axios.get(metaDataUrl)
     //   .then((response) => {
@@ -77,25 +77,25 @@ export default function Search() {
     const url = "http://localhost:8080/ai/dbquery";
     const body = { appId: appId, userMessage: searchTxt };
     let arr = searchQAArr;
-   /*  arr.push({ id: arr.length, question: searchTxt, answer: "test", appId: appId }); // remove when calling api
-    arr.reverse(); // remove when calling api
-    setSearchQAArr(arr); // remove when calling api  */
+    /*  arr.push({ id: arr.length, question: searchTxt, answer: "test", appId: appId }); // remove when calling api
+     arr.reverse(); // remove when calling api
+     setSearchQAArr(arr); // remove when calling api  */
 
     console.log("in post search results: ", arr);
-     axios.post(url, body)
-     .then((response) => {
-       console.log("response is: ", response);
-       const resp = response.data.completion;
-       arr.push({id: arr.length, question: searchTxt, answer: resp});
-       arr.reverse();
-       setSearchQAArr(arr);
-     })
-     .catch((error) => {
-       console.log("error response is: ", error);
-       arr.push({id: arr.length, question: searchTxt, answer:error});
-       arr.reverse();
-       setSearchStack(arr);
-     });
+    axios.post(url, body)
+      .then((response) => {
+        console.log("response is: ", response);
+        const resp = response.data.completion;
+        arr.push({ id: arr.length, question: searchTxt, answer: resp });
+        arr.reverse();
+        setSearchQAArr(arr);
+      })
+      .catch((error) => {
+        console.log("error response is: ", error);
+        arr.push({ id: arr.length, question: searchTxt, answer: error });
+        arr.reverse();
+        setSearchStack(arr);
+      });
     setSearchTxt("");
   }
 
@@ -183,12 +183,12 @@ export default function Search() {
     const uploadUrl = "http://localhost:8080/onboard/upload?appId=sample-app-2";
     const uploadPayload = {
       "formdata": [
-      {
-        "key": "file",
-        "type": "file",
-        "src": "./uploadFile.txt"
-      }
-    ]
+        {
+          "key": "file",
+          "type": "file",
+          "src": "./uploadFile.txt"
+        }
+      ]
     };
     axios.post(uploadUrl, uploadPayload)
       .then((response) => {
@@ -199,7 +199,7 @@ export default function Search() {
         console.log("error response is: ", error);
         alert("Error occured while upload, please try again");
       });
-    
+
   }
 
   const handleRadioBtnChange = (e) => {
@@ -216,7 +216,7 @@ export default function Search() {
         <select className="item" value={appId} onChange={handleAppIdChange} disabled={appIdDisplay}
           style={{ width: '200px', height: '100px', alignContent: "right" }}>
           <option value="none">Select an application</option>
-          {appList.length > 0 && appList.map((x)=> (<option value={x.id}>{x.value}</option>))}
+          {appList.length > 0 && appList.map((x) => (<option value={x.id}>{x.value}</option>))}
           {/* <option value="vantage">Vantage</option>
           <option value="WCA">WCA</option>
           <option value="wima">WIMA</option> */}
@@ -316,7 +316,7 @@ export default function Search() {
                 <label style={{ fontSize: '13px' }}>DB Provider</label>
                 <select className="input" name="db" value={formFields.db} onChange={handleInputChange}>
                   <option value="none">Select</option>
-                  {dbProviders.map((x)=> (<option value={x}>{x}</option>))}
+                  {dbProviders.map((x) => (<option value={x}>{x}</option>))}
                   {/* <option value="ORACLE">Oracle</option>
                   <option value="MY_SQL">MY SQL</option>
                   <option value="MS_SQL">MS SQL</option>
