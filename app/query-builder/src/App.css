@@ -46,6 +46,17 @@ label{
   color: #61dafb;
 }
 
+button{
+        background-color: #62529c;
+        border: none;
+        color: #fff;
+        padding: 15px 30px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 12px;
+      }
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

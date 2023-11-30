@@ -219,7 +219,7 @@ export default function Search() {
           <option value="wima">WIMA</option> */}
         </select>
 
-        <button style={{ alignContent: "left", float: 'right', width: '30%' }} onClick={onboardingClicked}>
+        <button style={{ float: 'right', width: '30%' }} onClick={onboardingClicked}>
           Onboarding
         </button>
       </div>
@@ -296,7 +296,7 @@ export default function Search() {
             <>
               <div>
                 <hr />
-                <label style={{ width: '100%', paddingLeft: '10px' }}>Choose a file to upload</label>
+                <label style={{ width: '100%', paddingLeft: '10px'}}>Choose a file to upload</label>
                 <input type="file" id="fileUpload" name="fileUpload" style={{ width: '100%', padding: '10px' }} accept="txt"></input>
                 <button name="btnUpload" onClick={handleUpload} style={{ width: '15%', paddingLeft: '10px' }}><b>Upload</b></button>
               </div>
