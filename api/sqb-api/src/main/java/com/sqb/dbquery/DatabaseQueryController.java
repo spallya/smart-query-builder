@@ -1,5 +1,6 @@
 package com.sqb.dbquery;
 
+import io.micrometer.common.util.StringUtils;
 import org.springframework.ai.client.AiClient;
 import org.springframework.ai.client.AiResponse;
 import org.springframework.ai.prompt.Prompt;
@@ -17,7 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000"})
 public class DatabaseQueryController {
 
     private final AiClient aiClient;
@@ -35,14 +35,15 @@ public class DatabaseQueryController {
 
     @PostMapping("/ai/dbquery")
     public Completion completion(@RequestBody MessageRequest request) {
+        if (StringUtils.isEmpty(request.getAppId())) {
+            request.setAppId("ecommerce-app");
+        }
         PromptTemplate promptTemplate = new PromptTemplate(dbaPromptResource);
-        FileSystemResource imgFile = new FileSystemResource("/Users/spallyaomar/Documents/Wells Fargo POC/github/smart-query-builder/api/sqb-api/src/main/resources/schemas/" +
-                request.getAppId() + ".txt");
-        Resource schema = resourceLoader.getResource("classpath:/schemas/" +
+        FileSystemResource shcemaResources = new FileSystemResource("/Users/spallyaomar/Documents/Wells Fargo POC/github/smart-query-builder/api/sqb-api/src/main/resources/schemas/" +
                 request.getAppId() + ".txt");
         Map<String, Object> map = new HashMap<>();
         map.put("question", request.getUserMessage());
-        map.put("context", imgFile);
+        map.put("context", shcemaResources);
         Prompt prompt = promptTemplate.create(map);
         AiResponse aiResponse = aiClient.generate(prompt);
         return new Completion(aiResponse.getGeneration().getText());

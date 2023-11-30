@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000"})
 public class FileUploadController {
 
     private final StorageService storageService;
