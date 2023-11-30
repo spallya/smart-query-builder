@@ -209,12 +209,9 @@ export default function Search() {
 
   return (
     <div className="App" style={{ width: '80%' }}>
-
-      <h1>Smart Query Builder</h1>
-
       <div>
         <select className="item" value={appId} onChange={handleAppIdChange} disabled={appIdDisplay}
-          style={{ width: '200px', height: '100px', alignContent: "right" }}>
+          style={{ width: '30%', height: '100px', alignContent: "right", float: 'left' }}>
           <option value="none">Select an application</option>
           {appList.length > 0 && appList.map((x) => (<option value={x.id}>{x.value}</option>))}
           {/* <option value="vantage">Vantage</option>
@@ -222,20 +219,26 @@ export default function Search() {
           <option value="wima">WIMA</option> */}
         </select>
 
-        <button style={{ alignContent: "left" }} onClick={onboardingClicked}>
+        <button style={{ alignContent: "left", float: 'right', width: '30%' }} onClick={onboardingClicked}>
           Onboarding
         </button>
       </div>
-
-      <input style={{ width: '80%', padding: '5px' }}
-        placeholder="Enter the text to Search"
-        name="searchTxt"
-        value={searchTxt}
-
-        onChange={handleValueChange} />
-      <div>
-        <button name="searchBtn" onClick={handleSearch} style={{ padding: '5px', marginRight: '20px', width: '30%' }}>Search</button>
-        <button name="resetBtn" onClick={handleReset} style={{ padding: '5px', width: '30%' }}>Reset</button>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <h1>Smart Query Builder</h1>
+      <div style={{ padding: '20px' }}>
+        <input style={{ width: '60%', paddingBottom: '5px' }}
+          placeholder="Enter the text to Search"
+          name="searchTxt"
+          value={searchTxt}
+          onChange={handleValueChange} />
+      </div>
+      <div style={{ padding: '20px' }}>
+        <button name="searchBtn" onClick={handleSearch} style={{ padding: '5px', marginRight: '20px', width: '20%' }}>Search</button>
+        <button name="resetBtn" onClick={handleReset} style={{ padding: '5px', width: '20%' }}>Reset</button>
       </div>
 
       {searchQAArr.length > 0 && (
