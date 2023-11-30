@@ -14,16 +14,23 @@ export default function Search() {
   const [radSelected, setRadSelected] = useState("");
   const [formFields, setFormFields] = useState(initalFormFields);
   const arrRef = useRef(null);
+  const [appList, setAppList] = useState({});
+  const [dbProviders, setdbProviders] = useState([]);
 
   useEffect(() => {
     const metaDataUrl = "http://localhost:8080/cached/metadata";
-    axios.get(metaDataUrl)
-      .then((response) => {
-        console.log("response is: ", response);
-      })
-      .catch((error) => {
-        console.log("error response is: ", error);
-      });
+    // remove below 2 lines when api integration is uncommented
+    setAppList([{id: "ems", value: "Employee Management System" }, {id: "vider", value: "Vider Solutions Pvt Ltd"}]);
+    setdbProviders(["ORACLE", "MY_SQL", "MS_SQL"])
+    // axios.get(metaDataUrl)
+    //   .then((response) => {
+    //     console.log("response is: ", response);
+    //     setAppList(response.data.onboardedApps); // TODO: check if apps is not loading
+    //     setdbProviders(response.data.databaseProviders); // TODO: check if providers is not loading
+    //   })
+    //   .catch((error) => {
+    //     console.log("error response is: ", error);
+    //   });
   }, []);
 
   useEffect(() => {
@@ -61,7 +68,7 @@ export default function Search() {
   }
 
   const handleAppIdChange = (e) => {
-    console.log("in handle value change: ", e);
+    console.log("in handle value change: ", e.target.value);
     setAppId(e.target.value);
     setAppIdDisplay(true);
   }
@@ -156,9 +163,11 @@ export default function Search() {
     axios.post(onboardUrl, onboardPayload)
       .then((response) => {
         console.log("response is: ", response);
+        setOnboarding(false);
       })
       .catch((error) => {
         console.log("error response is: ", error);
+        setOnboarding(true);
       });
   }
 
@@ -166,6 +175,31 @@ export default function Search() {
     console.log("cancelled");
     setRadSelected("");
     setFormFields(initalFormFields)
+  }
+
+  const handleUpload = () => {
+    console.log("in handle upload");
+    // upload api
+    const uploadUrl = "http://localhost:8080/onboard/upload?appId=sample-app-2";
+    const uploadPayload = {
+      "formdata": [
+      {
+        "key": "file",
+        "type": "file",
+        "src": "./uploadFile.txt"
+      }
+    ]
+    };
+    axios.post(uploadUrl, uploadPayload)
+      .then((response) => {
+        console.log("response is: ", response);
+        alert(response.data);
+      })
+      .catch((error) => {
+        console.log("error response is: ", error);
+        alert("Error occured while upload, please try again");
+      });
+    
   }
 
   const handleRadioBtnChange = (e) => {
@@ -182,9 +216,10 @@ export default function Search() {
         <select className="item" value={appId} onChange={handleAppIdChange} disabled={appIdDisplay}
           style={{ width: '200px', height: '100px', alignContent: "right" }}>
           <option value="none">Select an application</option>
-          <option value="vantage">Vantage</option>
+          {appList.length > 0 && appList.map((x)=> (<option value={x.id}>{x.value}</option>))}
+          {/* <option value="vantage">Vantage</option>
           <option value="WCA">WCA</option>
-          <option value="wima">WIMA</option>
+          <option value="wima">WIMA</option> */}
         </select>
 
         <button style={{ alignContent: "left" }} onClick={onboardingClicked}>
@@ -260,12 +295,13 @@ export default function Search() {
                 <hr />
                 <label style={{ width: '100%', paddingLeft: '10px' }}>Choose a file to upload</label>
                 <input type="file" id="fileUpload" name="fileUpload" style={{ width: '100%', padding: '10px' }} accept="txt"></input>
+                <button name="btnUpload" onClick={handleUpload} style={{ width: '15%', paddingLeft: '10px' }}><b>Upload</b></button>
               </div>
               <DialogActions>
                 <hr />
 
                 <div style={{ display: 'flex' }}>
-                  <button name="btnSubmit" onClick={handleSubmit}>Submit</button>
+                  <button name="btnSubmit" onClick={handleSubmit}><b>Submit</b></button>
                   <button name="btnCancel" onClick={handleCancel}>Cancel</button>
                 </div>
               </DialogActions>
@@ -280,10 +316,11 @@ export default function Search() {
                 <label style={{ fontSize: '13px' }}>DB Provider</label>
                 <select className="input" name="db" value={formFields.db} onChange={handleInputChange}>
                   <option value="none">Select</option>
-                  <option value="ORACLE">Oracle</option>
+                  {dbProviders.map((x)=> (<option value={x}>{x}</option>))}
+                  {/* <option value="ORACLE">Oracle</option>
                   <option value="MY_SQL">MY SQL</option>
                   <option value="MS_SQL">MS SQL</option>
-                  <option value="MONGO_DB">Mongo</option>
+                  <option value="MONGO_DB">Mongo</option> */}
                 </select>
               </div>
               <div style={{ paddingLeft: '15px', paddingBottom: '5px' }}>
