@@ -70,25 +70,25 @@ export default function Search() {
     const url = "http://localhost:8080/ai/dbquery";
     const body = { appId: appId, userMessage: searchTxt };
     let arr = searchQAArr;
-    arr.push({ id: arr.length, question: searchTxt, answer: "test", appId: appId }); // remove when calling api
+   /*  arr.push({ id: arr.length, question: searchTxt, answer: "test", appId: appId }); // remove when calling api
     arr.reverse(); // remove when calling api
-    setSearchQAArr(arr); // remove when calling api 
+    setSearchQAArr(arr); // remove when calling api  */
 
     console.log("in post search results: ", arr);
-    // axios.post(url, body)
-    // .then((response) => {
-    //   console.log("response is: ", response);
-    //   const resp = response.data.completion;
-    //   arr.push({id: arr.length, question: searchTxt, answer: resp});
-    //   arr.reverse();
-    //   setSearchQAArr(arr);
-    // })
-    // .catch((error) => {
-    //   console.log("error response is: ", error);
-    //   arr.push({id: arr.length, question: searchTxt, answer:error});
-    //   arr.reverse();
-    //   setSearchStack(arr);
-    // });
+     axios.post(url, body)
+     .then((response) => {
+       console.log("response is: ", response);
+       const resp = response.data.completion;
+       arr.push({id: arr.length, question: searchTxt, answer: resp});
+       arr.reverse();
+       setSearchQAArr(arr);
+     })
+     .catch((error) => {
+       console.log("error response is: ", error);
+       arr.push({id: arr.length, question: searchTxt, answer:error});
+       arr.reverse();
+       setSearchStack(arr);
+     });
     setSearchTxt("");
   }
 
@@ -280,9 +280,10 @@ export default function Search() {
                 <label style={{ fontSize: '13px' }}>DB Provider</label>
                 <select className="input" name="db" value={formFields.db} onChange={handleInputChange}>
                   <option value="none">Select</option>
-                  <option value="oracle">Oracle</option>
-                  <option value="mySql">My SQL</option>
-                  <option value="mongodb">Mongo</option>
+                  <option value="ORACLE">Oracle</option>
+                  <option value="MY_SQL">MY SQL</option>
+                  <option value="MS_SQL">MS SQL</option>
+                  <option value="MONGO_DB">Mongo</option>
                 </select>
               </div>
               <div style={{ paddingLeft: '15px', paddingBottom: '5px' }}>
@@ -320,7 +321,7 @@ export default function Search() {
               <hr />
 
               <div style={{ display: 'flex' }}>
-                <button name="btnSubmit" >Submit</button>
+                <button name="btnSubmit" onClick={handleSubmit}>Submit</button>
                 <button name="btnCancel" onClick={handleCancel}>Cancel</button>
               </div>
             </DialogActions>
