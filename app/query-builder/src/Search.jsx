@@ -121,7 +121,6 @@ export default function Search() {
   }
 
   const verifyConnection = () => {
-    alert("Connected Successfully");
     // db connectivity api
     const dbConnectUrl = "http://localhost:8080/connectivity/db";
     const verifyPayload = {
@@ -131,6 +130,7 @@ export default function Search() {
     axios.post(dbConnectUrl, verifyPayload)
       .then((response) => {
         console.log("response is: ", response);
+        alert(response.data);
       })
       .catch((error) => {
         console.log("error response is: ", error);
