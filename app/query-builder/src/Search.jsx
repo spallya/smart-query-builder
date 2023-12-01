@@ -20,17 +20,17 @@ export default function Search() {
   useEffect(() => {
     const metaDataUrl = "http://localhost:8080/cached/metadata";
     // remove below 2 lines when api integration is uncommented
-    setAppList([{ id: "ems", value: "Employee Management System" }, { id: "vider", value: "Vider Solutions Pvt Ltd" }]);
-    setdbProviders(["ORACLE", "MY_SQL", "MS_SQL"])
-    // axios.get(metaDataUrl)
-    //   .then((response) => {
-    //     console.log("response is: ", response);
-    //     setAppList(response.data.onboardedApps); // TODO: check if apps is not loading
-    //     setdbProviders(response.data.databaseProviders); // TODO: check if providers is not loading
-    //   })
-    //   .catch((error) => {
-    //     console.log("error response is: ", error);
-    //   });
+//     setAppList([{ id: "ems", value: "Employee Management System" }, { id: "vider", value: "Vider Solutions Pvt Ltd" }]);
+//     setdbProviders(["ORACLE", "MY_SQL", "MS_SQL"])
+    axios.get(metaDataUrl)
+      .then((response) => {
+        console.log("response is: ", response);
+        setAppList(response.data.onboardedApps); // TODO: check if apps is not loading
+        setdbProviders(response.data.databaseProviders); // TODO: check if providers is not loading
+      })
+      .catch((error) => {
+        console.log("error response is: ", error);
+      });
   }, []);
 
   useEffect(() => {
@@ -186,7 +186,7 @@ export default function Search() {
         {
           "key": "file",
           "type": "file",
-          "src": "./uploadFile.txt"
+          "src": "/Users/spallyaomar/Documents/Wells Fargo POC/smart-query-builder/api/sqb-api/src/main/resources/docs/db-schema.txt"
         }
       ]
     };

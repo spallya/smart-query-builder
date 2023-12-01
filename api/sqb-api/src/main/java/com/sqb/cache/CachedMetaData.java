@@ -7,7 +7,7 @@ import java.util.Map;
 
 public record CachedMetaData(
         List<DatabaseProviders> databaseProviders,
-        Map<String, String> onboardedApps
+        List<KeyValuePair> onboardedApps
 ) {
 
 }
