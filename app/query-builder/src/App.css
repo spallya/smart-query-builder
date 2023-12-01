@@ -18,14 +18,14 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items:first baseline;
-  justify-content:first baseline;
+  align-items: first baseline;
+  justify-content: first baseline;
   font-size: calc(10px+ 2vmin);
   color: white;
   padding: 30px
 }
 
-select{
+select {
   width: 45%;
   height: 50%;
 }
@@ -33,34 +33,72 @@ select{
 input {
   padding-left: 10px;
   padding-bottom: 5px;
-  width: 45%; 
+  width: 45%;
 }
 
-label{
+label {
   width: 40%;
   text-align: left;
   display: inline-block;
   font-size: '13px';
 }
+
 .App-link {
   color: #61dafb;
 }
 
-button{
-        background-color: #62529c;
-        border: none;
-        color: #fff;
-        text-decoration: none;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 12px;
-        height: 25px;
-      }
+button {
+  background-color: #62529c;
+  border: none;
+  color: #fff;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  height: 25px;
+}
+
+.spin-container {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.spin {
+  position: fixed;
+  z-index: 999;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+}
+
+.spin:not(:required):after {
+  content: '';
+  display: block;
+  font-size: 10px;
+  width: 50px;
+  height: 50px;
+  margin-top: -0.5em;
+
+  border: 15px solid rgb(76, 80, 84);
+  border-radius: 100%;
+  border-bottom-color: transparent;
+  -webkit-animation: spinner 1s linear 0s infinite;
+  animation: spinner 1s linear 0s infinite;
+
+
+}
+
 
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

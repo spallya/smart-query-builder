@@ -18,6 +18,7 @@ export default function Search() {
   const [appList, setAppList] = useState({});
   const [dbProviders, setdbProviders] = useState([]);
   const [file, setFile] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const metaDataUrl = "http://localhost:8080/cached/metadata";
@@ -79,30 +80,41 @@ export default function Search() {
     const url = "http://localhost:8080/ai/dbquery";
     const body = { appId: appId, userMessage: searchTxt };
     let arr = searchQAArr;
-    /*  arr.push({ id: arr.length, question: searchTxt, answer: "test", appId: appId }); // remove when calling api
-     arr.reverse(); // remove when calling api
-     setSearchQAArr(arr); // remove when calling api  */
+   /* setTimeout(() => {
+      arr.push({ id: arr.length, question: searchTxt, answer: "test", appId: appId }); // remove when calling api
+     // arr.reverse(); // remove when calling api
+     // setSearchQAArr(arr); // remove when calling api  
+     setIsLoading(false);
+     let sortedArr = arr.sort((a,b) => a.id - b.id).map((x, index, array) => x);
+     sortedArr.reverse();
+     setSearchQAArr(sortedArr);
+     console.log("in post search results: ", arr, sortedArr);
+    }, 2000);*/
 
-    console.log("in post search results: ", arr);
     axios.post(url, body)
       .then((response) => {
         console.log("response is: ", response);
         const resp = response.data.completion;
         arr.push({ id: arr.length, question: searchTxt, answer: resp });
-        arr.reverse();
-        setSearchQAArr(arr);
+        let sortedArr = arr.sort((a,b) => a.id - b.id).map((x, index, array) => x);
+        sortedArr.reverse();
+        setSearchQAArr(sortedArr);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log("error response is: ", error);
         arr.push({ id: arr.length, question: searchTxt, answer: error });
-        arr.reverse();
-        setSearchStack(arr);
+        let sortedArr = arr.sort((a,b) => a.id - b.id).map((x, index, array) => x);
+        sortedArr.reverse();
+        setSearchQAArr(sortedArr);
+        setIsLoading(false);
       });
     setSearchTxt("");
   }
 
   const handleSearch = () => {
     console.log("in handle search");
+    setIsLoading(true);
     let arr = searchStack;
     console.log("in search: ", arr, searchStack);
     arr.push(searchTxt);
@@ -244,7 +256,9 @@ export default function Search() {
   }
 
   return (
-    <div className="App" style={{ width: '80%' }}>
+    <div className="App" style={{ width: '90%' }}>
+      { isLoading && (
+      <div className="spin" id="loader"></div>)}
       <div>
         <select className="item" value={appId} onChange={handleAppIdChange} disabled={appIdDisplay}
           style={{ width: '30%', alignContent: "right", float: 'left', marginTop: "5px"}}>
