@@ -14,7 +14,7 @@ public class DatabaseConnectionDto {
     }
 
     private String schemaName;
-    private DatabaseProviders databaseProvider;
+    private String databaseProvider;
     private String userName;
     private String password;
 
@@ -34,11 +34,11 @@ public class DatabaseConnectionDto {
         this.port = port;
     }
 
-    public DatabaseProviders getDatabaseProvider() {
+    public String getDatabaseProvider() {
         return databaseProvider;
     }
 
-    public void setDatabaseProvider(DatabaseProviders databaseProvider) {
+    public void setDatabaseProvider(String databaseProvider) {
         this.databaseProvider = databaseProvider;
     }
 

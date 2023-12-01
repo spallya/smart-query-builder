@@ -33,7 +33,8 @@ public class OnboardingService {
 
     public String onboardApp(AppOnboardingDto onboardingDto) {
         Map<String, Set<String>> schemaMetadata = new HashMap<>();
-        if (onboardingDto.getDbConnectionDetails() != null) {
+        if (onboardingDto.getDbConnectionDetails() != null &&
+                StringUtils.isNotEmpty(onboardingDto.getDbConnectionDetails().getDatabaseProvider())) {
             schemaMetadata = databaseConfig.getSchemaMetadata(onboardingDto.getDbConnectionDetails());
         }
         if (MapUtils.isNotEmpty(schemaMetadata)) {

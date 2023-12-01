@@ -27,7 +27,8 @@ public class DatabaseConfig {
         try {
             Connection connection = getConnection(connectionDto);
             ResultSet resultSet;
-            try (PreparedStatement preparedStatement = connection.prepareStatement(connectionDto.getDatabaseProvider().getMetadataQuery() +
+            try (PreparedStatement preparedStatement = connection.prepareStatement(DatabaseProviders.valueOf(
+                    connectionDto.getDatabaseProvider()).getMetadataQuery() +
                     "'" +
                     connectionDto.getSchemaName() +
                     "'")) {
@@ -53,8 +54,8 @@ public class DatabaseConfig {
     }
 
     private Connection getConnection(DatabaseConnectionDto connectionDto) throws ClassNotFoundException, SQLException {
-        Class.forName(connectionDto.getDatabaseProvider().getDriverName());
-        String url = connectionDto.getDatabaseProvider().getBaseUrl() +
+        Class.forName(DatabaseProviders.valueOf(connectionDto.getDatabaseProvider()).getDriverName());
+        String url = DatabaseProviders.valueOf(connectionDto.getDatabaseProvider()).getBaseUrl() +
                 connectionDto.getHost() +
                 ":" +
                 connectionDto.getPort() +
