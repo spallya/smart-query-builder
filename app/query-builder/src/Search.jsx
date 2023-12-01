@@ -247,7 +247,7 @@ export default function Search() {
     <div className="App" style={{ width: '80%' }}>
       <div>
         <select className="item" value={appId} onChange={handleAppIdChange} disabled={appIdDisplay}
-          style={{ width: '30%', height: '100px', alignContent: "right", float: 'left' }}>
+          style={{ width: '30%', alignContent: "right", float: 'left', marginTop: "5px"}}>
           <option value="none">Select an application</option>
           {appList.length > 0 && appList.map((x) => (<option value={x.id}>{x.value}</option>))}
           {/* <option value="vantage">Vantage</option>
@@ -273,8 +273,8 @@ export default function Search() {
           onChange={handleValueChange} />
       </div>
       <div style={{ padding: '20px' }}>
-        <button name="searchBtn" onClick={handleSearch} style={{ padding: '5px', marginRight: '20px', width: '20%' }}>Search</button>
-        <button name="resetBtn" onClick={handleReset} style={{ padding: '5px', width: '20%' }}>Reset</button>
+        <button name="searchBtn" onClick={handleSearch} style={{ width: '20%' }}>Search</button>
+        <button name="resetBtn" onClick={handleReset} style={{  width: '20%' }}>Reset</button>
       </div>
 
       {searchQAArr.length > 0 && (
@@ -338,7 +338,7 @@ export default function Search() {
                     onChange={handleFileChange}
                     style={{ width: '100%', padding: '10px' }} accept="txt"></input>
                 </form>
-                <button name="btnUpload" onClick={handleUpload} style={{ width: '15%', paddingLeft: '10px' }}><b>Upload</b></button>
+                <button name="btnUpload" onClick={handleUpload} style={{ paddingLeft: '10px' }}><b>Upload</b></button>
               </div>
               <DialogActions>
                 <hr />

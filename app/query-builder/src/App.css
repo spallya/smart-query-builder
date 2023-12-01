@@ -33,7 +33,7 @@ select{
 input {
   padding-left: 10px;
   padding-bottom: 5px;
-  width: 45%;
+  width: 45%; 
 }
 
 label{
@@ -50,11 +50,11 @@ button{
         background-color: #62529c;
         border: none;
         color: #fff;
-        padding: 15px 30px;
         text-decoration: none;
         margin: 4px 2px;
         cursor: pointer;
         border-radius: 12px;
+        height: 25px;
       }
 
 @keyframes App-logo-spin {
