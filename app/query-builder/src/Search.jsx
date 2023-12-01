@@ -144,6 +144,20 @@ export default function Search() {
       });
   }
 
+  const callMetaData = () => {
+    const metaDataUrl = "http://localhost:8080/cached/metadata";
+    axios.get(metaDataUrl)
+      .then((response) => {
+        console.log("response is: ", response);
+        setAppList(response.data.onboardedApps);
+        setdbProviders(response.data.databaseProviders);
+      })
+      .catch((error) => {
+        console.log("error response is: ", error);
+      });
+   
+  }
+
   const handleSubmit = () => {
     console.log("in handle submit");
     // onboard api
@@ -163,6 +177,7 @@ export default function Search() {
     axios.post(onboardUrl, onboardPayload)
       .then((response) => {
         console.log("response is: ", response);
+        callMetaData();
         setOnboarding(false);
       })
       .catch((error) => {
@@ -186,7 +201,7 @@ export default function Search() {
         {
           "key": "file",
           "type": "file",
-          "src": "./uploadFile.txt"
+          "src": "./uploadFile.txt" // do dynamic and complete file path
         }
       ]
     };
@@ -228,7 +243,7 @@ export default function Search() {
       <br />
       <br />
       <br />
-      <h1>Smart Query Builder</h1>
+      <h1>InferQ</h1>
       <div style={{ padding: '20px' }}>
         <input style={{ width: '60%', paddingBottom: '5px' }}
           placeholder="Enter the text to Search"
@@ -296,7 +311,7 @@ export default function Search() {
             <>
               <div>
                 <hr />
-                <label style={{ width: '100%', paddingLeft: '10px'}}>Choose a file to upload</label>
+                <label style={{ width: '100%', paddingLeft: '10px' }}>Choose a file to upload</label>
                 <input type="file" id="fileUpload" name="fileUpload" style={{ width: '100%', padding: '10px' }} accept="txt"></input>
                 <button name="btnUpload" onClick={handleUpload} style={{ width: '15%', paddingLeft: '10px' }}><b>Upload</b></button>
               </div>
@@ -348,7 +363,7 @@ export default function Search() {
               </div>
               <div style={{ paddingLeft: '15px', paddingBottom: '5px' }}>
                 <label style={{ fontSize: '13px' }}>Password</label>
-                <input className="input" name="password" label="Password" placeholder="Enter Password"
+                <input className="input" name="password" label="Password" placeholder="Enter Password" type="password"
                   onChange={handleInputChange} value={formFields.password}></input>
               </div>
 
