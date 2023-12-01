@@ -83,14 +83,11 @@ button {
   width: 50px;
   height: 50px;
   margin-top: -0.5em;
-
   border: 15px solid rgb(76, 80, 84);
   border-radius: 100%;
   border-bottom-color: transparent;
   -webkit-animation: spinner 1s linear 0s infinite;
   animation: spinner 1s linear 0s infinite;
-
-
 }
 
 
