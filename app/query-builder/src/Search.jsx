@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import './App.css';
+const FormData = require('form-data');
 
 export default function Search() {
   const [searchTxt, setSearchTxt] = useState("");
@@ -16,12 +17,13 @@ export default function Search() {
   const arrRef = useRef(null);
   const [appList, setAppList] = useState({});
   const [dbProviders, setdbProviders] = useState([]);
+  const [file, setFile] = useState();
 
   useEffect(() => {
     const metaDataUrl = "http://localhost:8080/cached/metadata";
     // remove below 2 lines when api integration is uncommented
-//     setAppList([{ id: "ems", value: "Employee Management System" }, { id: "vider", value: "Vider Solutions Pvt Ltd" }]);
-//     setdbProviders(["ORACLE", "MY_SQL", "MS_SQL"])
+    //     setAppList([{ id: "ems", value: "Employee Management System" }, { id: "vider", value: "Vider Solutions Pvt Ltd" }]);
+    //     setdbProviders(["ORACLE", "MY_SQL", "MS_SQL"])
     axios.get(metaDataUrl)
       .then((response) => {
         console.log("response is: ", response);
@@ -155,7 +157,7 @@ export default function Search() {
       .catch((error) => {
         console.log("error response is: ", error);
       });
-   
+
   }
 
   const handleSubmit = () => {
@@ -191,29 +193,48 @@ export default function Search() {
     setRadSelected("");
     setFormFields(initalFormFields)
   }
+  const handleFileChange = (e) => {
+    console.log("file change event", e.target.files[0]);
+    setFile(e.target.files[0]);
+  }
 
   const handleUpload = () => {
-    console.log("in handle upload");
     // upload api
+    console.log("form data is: ", FormData);
     const uploadUrl = "http://localhost:8080/onboard/upload?appId=sample-app-2";
-    const uploadPayload = {
-      "formdata": [
-        {
-          "key": "file",
-          "type": "file",
-          "src": "/Users/spallyaomar/Documents/Wells Fargo POC/smart-query-builder/api/sqb-api/src/main/resources/docs/db-schema.txt"
-        }
-      ]
+    // const uploadPayload = {
+    //   "formdata": [
+    //     {
+    //       "key": "file",
+    //       "type": "file",
+    //       "src": "/Users/spallyaomar/Documents/Wells Fargo POC/smart-query-builder/api/sqb-api/src/main/resources/docs/db-schema.txt"
+    //     }
+    //   ],
+    // };
+    // axios.post(uploadUrl, uploadPayload)
+    //   .then((response) => {
+    //     console.log("response is: ", response);
+    //     alert(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.log("error response is: ", error);
+    //     alert("Error occured while upload, please try again");
+    //   });
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('fileName', file.name);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
     };
-    axios.post(uploadUrl, uploadPayload)
-      .then((response) => {
-        console.log("response is: ", response);
-        alert(response.data);
-      })
-      .catch((error) => {
-        console.log("error response is: ", error);
-        alert("Error occured while upload, please try again");
-      });
+    axios.post(uploadUrl, formData, config).then((response) => {
+      console.log(response.data);
+      alert("File Uploaded Successfully")
+    }).catch((error) => {
+      console.log("error response is: ", error);
+      alert("Error occured while upload, please try again");
+    });
 
   }
 
@@ -312,7 +333,11 @@ export default function Search() {
               <div>
                 <hr />
                 <label style={{ width: '100%', paddingLeft: '10px' }}>Choose a file to upload</label>
-                <input type="file" id="fileUpload" name="fileUpload" style={{ width: '100%', padding: '10px' }} accept="txt"></input>
+                <form method="post" id="uploadFrm" enctype="multipart/form-data">
+                  <input type="file" id="fileUpload" name="fileUpload"
+                    onChange={handleFileChange}
+                    style={{ width: '100%', padding: '10px' }} accept="txt"></input>
+                </form>
                 <button name="btnUpload" onClick={handleUpload} style={{ width: '15%', paddingLeft: '10px' }}><b>Upload</b></button>
               </div>
               <DialogActions>
