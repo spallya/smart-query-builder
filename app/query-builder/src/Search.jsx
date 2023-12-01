@@ -201,7 +201,7 @@ export default function Search() {
   const handleUpload = () => {
     // upload api
     console.log("form data is: ", FormData);
-    const uploadUrl = "http://localhost:8080/onboard/upload?appId=sample-app-2";
+    const uploadUrl = "http://localhost:8080/onboard/upload?appId=" + formFields.appId;
     // const uploadPayload = {
     //   "formdata": [
     //     {
