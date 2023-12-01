@@ -270,7 +270,7 @@ export default function Search() {
         </select>
 
         <button style={{ float: 'right', width: '30%' }} onClick={onboardingClicked}>
-          Onboarding
+          Onboard a new application
         </button>
       </div>
       <br />
