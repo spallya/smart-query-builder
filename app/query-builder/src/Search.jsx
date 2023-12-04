@@ -159,7 +159,7 @@ export default function Search() {
       })
       .catch((error) => {
         console.log("error response is: ", error);
-        setMsg({ type: "error", msg: "Error occured" });
+        setMsg({ type: "error", msg: error.response.data });
       });
   }
 
@@ -234,11 +234,11 @@ export default function Search() {
     axios.post(uploadUrl, formData, config).then((response) => {
       console.log(response.data);
       // alert("File Uploaded Successfully")
-      setMsg({ type: "success", msg: "File Uploaded Successfully" });
+      setMsg({ type: "success", msg: response.data });
     }).catch((error) => {
       console.log("error response is: ", error);
       // alert("Error occured while upload, please try again");
-      setMsg({ type: "error", msg: "Error occured while upload, please try again" });
+      setMsg({ type: "error", msg: error.response.data });
     });
 
   }

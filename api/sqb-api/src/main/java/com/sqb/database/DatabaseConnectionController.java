@@ -17,6 +17,9 @@ public class DatabaseConnectionController {
     @PostMapping("/connectivity/db")
     public ResponseEntity<String> testConnectivity(@RequestBody DatabaseConnectionDto connectionDto) {
         String testConnection = databaseConfig.testConnection(connectionDto);
-        return new ResponseEntity<>(testConnection, HttpStatus.OK);
+        if ("Connection Successful!!".equalsIgnoreCase(testConnection)) {
+            return new ResponseEntity<>(testConnection, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(testConnection, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

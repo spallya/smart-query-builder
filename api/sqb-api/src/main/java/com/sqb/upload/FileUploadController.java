@@ -1,5 +1,6 @@
 package com.sqb.upload;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -50,6 +51,9 @@ public class FileUploadController {
     @PostMapping("/onboard/upload")
     public ResponseEntity<String> handleFileUpload(@RequestParam(value = "appId", required = true) String appId,
             @RequestParam("file") MultipartFile file) {
+        if (StringUtils.isEmpty(appId)) {
+            return new ResponseEntity<>("Please provide app id value for uploading the file", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         storageService.store(file, appId);
 
         return new ResponseEntity<>("You have successfully uploaded " + file.getOriginalFilename() + "!", HttpStatus.OK);
