@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import './App.css';
+import Alert from '@mui/material/Alert';
 const FormData = require('form-data');
 
 export default function Search() {
@@ -19,6 +20,7 @@ export default function Search() {
   const [dbProviders, setdbProviders] = useState([]);
   const [file, setFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [msg, setMsg] = useState({});
 
   useEffect(() => {
     const metaDataUrl = "http://localhost:8080/cached/metadata";
@@ -80,16 +82,16 @@ export default function Search() {
     const url = "http://localhost:8080/ai/dbquery";
     const body = { appId: appId, userMessage: searchTxt };
     let arr = searchQAArr;
-   /* setTimeout(() => {
-      arr.push({ id: arr.length, question: searchTxt, answer: "test", appId: appId }); // remove when calling api
-     // arr.reverse(); // remove when calling api
-     // setSearchQAArr(arr); // remove when calling api  
-     setIsLoading(false);
-     let sortedArr = arr.sort((a,b) => a.id - b.id).map((x, index, array) => x);
-     sortedArr.reverse();
-     setSearchQAArr(sortedArr);
-     console.log("in post search results: ", arr, sortedArr);
-    }, 2000);*/
+    /* setTimeout(() => {
+       arr.push({ id: arr.length, question: searchTxt, answer: "test", appId: appId }); // remove when calling api
+       // arr.reverse(); // remove when calling api
+       // setSearchQAArr(arr); // remove when calling api  
+       setIsLoading(false);
+       let sortedArr = arr.sort((a,b) => a.id - b.id).map((x, index, array) => x);
+       sortedArr.reverse();
+       setSearchQAArr(sortedArr);
+       console.log("in post search results: ", arr, sortedArr);
+     }, 2000);*/
 
     axios.post(url, body)
       .then((response) => {
@@ -148,13 +150,16 @@ export default function Search() {
       "host": formFields.host, "port": formFields.portNo, "schemaName": formFields.schema,
       "databaseProvider": formFields.db, "userName": formFields.userName, "password": formFields.password
     };
+    // setMsg({ type: "success", msg: "succesfully connected" });
     axios.post(dbConnectUrl, verifyPayload)
       .then((response) => {
         console.log("response is: ", response);
-        alert(response.data);
+        // alert(response.data);
+        setMsg({ type: "success", msg: response.data });
       })
       .catch((error) => {
         console.log("error response is: ", error);
+        setMsg({ type: "error", msg: "Error occured" });
       });
   }
 
@@ -174,6 +179,7 @@ export default function Search() {
 
   const handleSubmit = () => {
     console.log("in handle submit");
+    setMsg({});
     // onboard api
     const onboardUrl = "http://localhost:8080/onboard";
     const onboardPayload = {
@@ -202,11 +208,13 @@ export default function Search() {
 
   const handleCancel = () => {
     console.log("cancelled");
+    setMsg({});
     setRadSelected("");
-    setFormFields(initalFormFields)
+    setFormFields(initalFormFields);
   }
   const handleFileChange = (e) => {
     console.log("file change event", e.target.files[0]);
+    setMsg({});
     setFile(e.target.files[0]);
   }
 
@@ -214,24 +222,7 @@ export default function Search() {
     // upload api
     console.log("form data is: ", FormData);
     const uploadUrl = "http://localhost:8080/onboard/upload?appId=" + formFields.appId;
-    // const uploadPayload = {
-    //   "formdata": [
-    //     {
-    //       "key": "file",
-    //       "type": "file",
-    //       "src": "/Users/spallyaomar/Documents/Wells Fargo POC/smart-query-builder/api/sqb-api/src/main/resources/docs/db-schema.txt"
-    //     }
-    //   ],
-    // };
-    // axios.post(uploadUrl, uploadPayload)
-    //   .then((response) => {
-    //     console.log("response is: ", response);
-    //     alert(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log("error response is: ", error);
-    //     alert("Error occured while upload, please try again");
-    //   });
+
     const formData = new FormData();
     formData.append('file', file);
     formData.append('fileName', file.name);
@@ -242,35 +233,36 @@ export default function Search() {
     };
     axios.post(uploadUrl, formData, config).then((response) => {
       console.log(response.data);
-      alert("File Uploaded Successfully")
+      // alert("File Uploaded Successfully")
+      setMsg({ type: "success", msg: "File Uploaded Successfully" });
     }).catch((error) => {
       console.log("error response is: ", error);
-      alert("Error occured while upload, please try again");
+      // alert("Error occured while upload, please try again");
+      setMsg({ type: "error", msg: "Error occured while upload, please try again" });
     });
 
   }
 
   const handleRadioBtnChange = (e) => {
     console.log("in handle radio btn change :", e)
+    setMsg({});
+    setFormFields(initalFormFields);
     setRadSelected(e.target.value);
   }
 
   return (
     <div className="App" style={{ width: '90%' }}>
       { isLoading && (
-      <div className="spin" id="loader"></div>)}
+        <div className="spin" id="loader"></div>)}
       <div>
         <select className="item" value={appId} onChange={handleAppIdChange} disabled={appIdDisplay}
           style={{ width: '30%', alignContent: "right", float: 'left', marginTop: "5px"}}>
           <option value="none">Select an application</option>
           {appList.length > 0 && appList.map((x) => (<option value={x.id}>{x.value}</option>))}
-          {/* <option value="vantage">Vantage</option>
-          <option value="WCA">WCA</option>
-          <option value="wima">WIMA</option> */}
         </select>
 
         <button style={{ float: 'right', width: '30%' }} onClick={onboardingClicked}>
-          Onboard a new application
+        Onboard a new application
         </button>
       </div>
       <br />
@@ -346,13 +338,23 @@ export default function Search() {
             <>
               <div>
                 <hr />
-                <label style={{ width: '100%', paddingLeft: '10px' }}>Choose a file to upload</label>
-                <form method="post" id="uploadFrm" enctype="multipart/form-data">
-                  <input type="file" id="fileUpload" name="fileUpload"
-                    onChange={handleFileChange}
-                    style={{ width: '100%', padding: '10px' }} accept="txt"></input>
-                </form>
-                <button name="btnUpload" onClick={handleUpload} style={{ paddingLeft: '10px' }}><b>Upload</b></button>
+                <DialogContent>
+                  {msg && msg.type === "error" ?
+                    <span>
+                      <Alert severity="error">{msg.msg}</Alert>
+                    </span>
+                    : (msg && msg.type === "success" ? <span>
+                      <Alert severity="success">{msg.msg}</Alert>
+                    </span> : "")
+                  }
+                  <label style={{ width: '100%', paddingLeft: '10px' }}>Choose a file to upload</label>
+                  <form method="post" id="uploadFrm" enctype="multipart/form-data">
+                    <input type="file" id="fileUpload" name="fileUpload"
+                      onChange={handleFileChange}
+                      style={{ width: '100%', padding: '10px' }} accept="txt"></input>
+                  </form>
+                  <button name="btnUpload" onClick={handleUpload} style={{ paddingLeft: '10px' }}><b>Upload</b></button>
+                </DialogContent>
               </div>
               <DialogActions>
                 <hr />
@@ -366,18 +368,21 @@ export default function Search() {
           }
           {radSelected === "Database" && <div>
             <hr />
-            <DialogContentText style={{ padding: '10px' }}><b>Database Details</b></DialogContentText>
+            <DialogContentText style={{ padding: '5px' }}><b>Database Details</b></DialogContentText>
             <DialogContent>
-
+              {msg && msg.type === "error" ?
+                <span>
+                  <Alert severity="error">{msg.msg}</Alert>
+                </span>
+                : (msg && msg.type === "success" ? <span>
+                  <Alert severity="success">{msg.msg}</Alert>
+                </span> : "")
+              }
               <div style={{ paddingLeft: '15px', paddingBottom: '5px' }}>
                 <label style={{ fontSize: '13px' }}>DB Provider</label>
                 <select className="input" name="db" value={formFields.db} onChange={handleInputChange}>
                   <option value="none">Select</option>
                   {dbProviders.map((x) => (<option value={x}>{x}</option>))}
-                  {/* <option value="ORACLE">Oracle</option>
-                  <option value="MY_SQL">MY SQL</option>
-                  <option value="MS_SQL">MS SQL</option>
-                  <option value="MONGO_DB">Mongo</option> */}
                 </select>
               </div>
               <div style={{ paddingLeft: '15px', paddingBottom: '5px' }}>
