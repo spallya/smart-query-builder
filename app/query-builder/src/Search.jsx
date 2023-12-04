@@ -246,7 +246,7 @@ export default function Search() {
   const handleRadioBtnChange = (e) => {
     console.log("in handle radio btn change :", e)
     setMsg({});
-    setFormFields(initalFormFields);
+   // setFormFields(initalFormFields);
     setRadSelected(e.target.value);
   }
 
